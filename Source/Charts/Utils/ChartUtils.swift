@@ -58,11 +58,14 @@ extension Double {
         guard !isInfinite, !isNaN, self != 0 else { return self }
 
         // Use Foundation.log10
-        let d = ceil(Foundation.log10(self < 0 ? -self : self))
+       // let d = ceil(Foundation.log10(self < 0 ? -self : self))
+        let d = ceil(Darwin.log10(abs(self)))
         let pw = 1 - Int(d)
         
         // Use Foundation.pow
-        let magnitude = Foundation.pow(10.0, Double(pw))
+        //let magnitude = Foundation.pow(10.0, Double(pw))
+        let magnitude = Darwin.pow(10.0, Double(pw))
+
         let shifted = (self * magnitude).rounded()
         return shifted / magnitude
     }
@@ -75,7 +78,8 @@ extension Double {
         guard !i.isInfinite, !i.isNaN else { return 0 }
 
         // Use Foundation.log10
-        return Int(ceil(-Foundation.log10(i))) + 2
+       // return Int(ceil(-Foundation.log10(i))) + 2
+        return Int(ceil(-Darwin.log10(i))) + 2
     }
 }
 
